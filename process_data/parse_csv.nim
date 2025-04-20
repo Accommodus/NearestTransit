@@ -46,9 +46,12 @@ proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
       else:
         result[key] = @[tp]
 
-    except ValueError: continue
-
+    except ValueError:
+      when defined(debugging):
+        skip_amount += 1
+      continue
+        
   when defined(debugging):
-    echo "skipped ", skip_amount, " out of ", parser.rowCount, " rows"
+    echo "skipped ", skip_amount, " out of ", parser.processedRows, " rows"
 
   parser.close()

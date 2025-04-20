@@ -1,4 +1,5 @@
 import std/math
+from ../settings import earthRadius
 
 type
   Coord* = array[2, float]
@@ -37,3 +38,18 @@ proc asRad*(c: Coord): Coord =
 proc newCoord*(lat, lon: float): Coord =
   result[0] = lat
   result[1] = lon
+
+proc haversineDist*(a, b: Coord): float =
+  ## Calculates the Haversine distance between two points on the Earth.
+  ## Inputs are in radians; output is in meters.
+  ## based on: https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
+  
+  let
+    dLat = b.lat - a.lat
+    dLon = b.lon - a.lon
+    sinDLat = sin(dLat / 2)
+    sinDLon = sin(dLon / 2)
+    h = sinDLat * sinDLat + cos(a.lat) * cos(b.lat) * sinDLon * sinDLon
+    c = 2 * arcsin(sqrt(h))
+
+  return earthRadius * c
