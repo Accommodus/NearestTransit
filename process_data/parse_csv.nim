@@ -43,4 +43,6 @@ proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
     else:
       result[key] = @[tp]
 
+      result[key] = LocationPoint(lat: latF, lon: lonF, transits: @[tp])
+
   parser.close()
