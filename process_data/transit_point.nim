@@ -1,4 +1,6 @@
 type
+  Coord* = array[2, float]
+
   TransitPoint* = object
     ntd_id: string
     stop_id: string
@@ -16,6 +18,7 @@ type
     agency_id: string
     download_date: string
 
-  LocationPoint* = object
-    lat, lon: float
-    transits: seq[TransitPoint]
+proc lat*(c: Coord): float =
+  result = c[0]
+proc lon*(c: Coord): float =
+  result = c[1]
