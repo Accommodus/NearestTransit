@@ -9,6 +9,6 @@ task test, "runs the tests":
   for testFile in testFiles:
     if testFile.endsWith(".nim"):
       echo "Running test: ", testFile
-      let command = "r " & testFile
+      let command = "r -d:debugging " & testFile
       selfExec(command)
       
