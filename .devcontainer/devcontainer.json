@@ -10,6 +10,11 @@
 ,
     "customizations": {
         "vscode": {
+            "settings": {
+                "nim.buildCommand": "js",
+                "nim.runOutputDirectory": "output/",
+                "nim.useNimCheck": false
+            },
             "extensions": [
                 "nimlang.nimlang"
             ]
