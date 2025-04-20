@@ -1,5 +1,5 @@
 import std/[parsecsv, tables, strutils]
-include defs
+import defs
 
 proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
   ## Parses a CSV of transit stops and groups TransitPoints by exact lat/lon.
@@ -12,7 +12,7 @@ proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
   parser.open(dataFilePath)
   parser.readHeaderRow()
 
-  while parser.readRow():
+  while parser.readRow(): # O(n)
     let 
       latF = parser.rowEntry("stop_lat").parseFloat
       lonF = parser.rowEntry("stop_lon").parseFloat

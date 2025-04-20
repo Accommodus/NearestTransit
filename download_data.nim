@@ -1,18 +1,10 @@
 import std/[dirs, paths, files, httpclient]
-
-const
-  dataDir = "data".Path
-  dataFileName = "NTAD_Stops".Path
-  dataUrl = "https://github.com/Accommodus/NearestTransit/releases/download/data/NTAD_National_Transit_Map_Stops_6633473857343365838.csv"
-
-let 
-  dataFile = dataDir / dataFileName
-
+from settings import dataDir, dataFile, dataUrl
 
 proc downloadData() =
-  discard existsOrCreateDir(dataDir)
+  discard existsOrCreateDir(dataDir.Path)
 
-  if not fileExists(dataFile):
+  if not fileExists(dataFile.Path):
     var client = newHttpClient()
     try:
       client.downloadFile(dataUrl, $dataFile)
