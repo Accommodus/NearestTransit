@@ -1,0 +1,21 @@
+{
+    "name": "Project3 Dev Container",
+    "image":"boomboomcannon/near-pub-trans",
+
+    "workspaceMount": "source=workspace,target=/home/workspace,type=volume",
+    "workspaceFolder": "/home/workspace",
+
+    "onCreateCommand": "git clone --branch main https://github.com/Accommodus/NearestTransit.git /home/workspace",
+    "postStartCommand": "if ! git config --global user.name > /dev/null; then echo 'Enter your Git user.name:' && read name && git config --global user.name \"$name\" && echo 'Enter your Git user.email:' && read email && git config --global user.email \"$email\"; fi"
+,
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "nimlang.nimlang"
+            ]
+        }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    }
+}
