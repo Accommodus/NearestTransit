@@ -1,9 +1,9 @@
 import std/[parsecsv, tables, strutils]
-include transit_point
+include defs
 
 proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
   ## Parses a CSV of transit stops and groups TransitPoints by exact lat/lon.
-  ## Time complexity: O(n) where n is the number of rows in the CSV.
+  ## Time complexity: O(n) where n is the number of items in the dataset. 
   
   result = initTable[Coord, seq[TransitPoint]]()
   

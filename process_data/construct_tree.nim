@@ -1,12 +1,12 @@
 import kdtree
-import transit_point
-import std/[sequtils, tables, math]
+import defs
+import std/[tables]
 
-proc constructTree*(table: Table[KdPoint, LocationPoint]): KdTree[LocationPoint] =
-    let input = toSeq(table.pairs)
+proc constructTree*(table: Table[Coord, seq[TransitPoint]]): KdTree[seq[TransitPoint]] =
 
-    for i in input: # convert to radians for easier calcs
-        i[1].lat = degToRad(i.lat)
-        i[1].lon = degToRad(i.lon)
+    var holder: seq[(Coord, seq[TransitPoint])]
+    for k, v in table.pairs:
+      let rad_k = k.asRad()
+      holder.add((rad_k, v))
 
-    result = newKdTree[LocationPoint](input)
+    result = newKdTree[seq[TransitPoint]](holder)
