@@ -43,6 +43,4 @@ proc getLocationPoints*(dataFilePath: string): Table[KdPoint, LocationPoint] =
     else:
       result[key] = LocationPoint(lat: latF, lon: lonF, transits: @[tp])
 
-    discard result.hasKeyOrPut(key, LocationPoint(lat: latF, lon: lonF, transits: @[tp]))
-
   parser.close()
