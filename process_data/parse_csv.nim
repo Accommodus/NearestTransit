@@ -1,6 +1,5 @@
 import std/[parsecsv, tables, strutils]
 include transit_point
-from kdtree import KdPoint
 
 proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
   ## Parses a CSV of transit stops and groups TransitPoints by exact lat/lon.
@@ -42,7 +41,5 @@ proc getLocationPoints*(dataFilePath: string): Table[Coord, seq[TransitPoint]] =
       result[key].add tp
     else:
       result[key] = @[tp]
-
-      result[key] = LocationPoint(lat: latF, lon: lonF, transits: @[tp])
 
   parser.close()
