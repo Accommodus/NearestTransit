@@ -1,3 +1,4 @@
+import std/[segfaults]
 import ../process_data/[construct_tree, defs]
 import kdtree
 
