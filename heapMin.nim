@@ -7,7 +7,7 @@ proc cmp(a, b: LocationNode): int =
 
 type
     MinHeap*[T] = object
-        arr*: seq[T]
+        arr: seq[T]
 
 proc constructMinHeap*[T](): MinHeap[T] =
     result = MinHeap[T](arr: @[])
