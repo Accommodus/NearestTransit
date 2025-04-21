@@ -1,4 +1,4 @@
-proc partition(low:int,high:int, arr: var seq[float]): int =
+proc partition[T](low:int,high:int, arr: var seq[T]): int =
     var pivot  = arr[high]
     var i = (low - 1)
     for j in countup(low,(high -1)):
@@ -13,7 +13,7 @@ proc partition(low:int,high:int, arr: var seq[float]): int =
 
     return (i+1)
 
-proc quickSort(arr: var seq[float], low:int, high:int): void = 
+proc quickSort[T](arr: var seq[T], low:int, high:int): void = 
     if low < high:
         var index = partition(low, high, arr)
         quickSort(arr,low,(index-1))
