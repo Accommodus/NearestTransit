@@ -1,5 +1,5 @@
 proc partition(low:int,high:int, arr: var seq[float]): int =
-    var pivot  = float(high)
+    var pivot  = arr[high]
     var i = (low - 1)
     for j in countup(low,(high -1)):
         if arr[j] <= pivot:
@@ -29,7 +29,7 @@ when isMainModule:
         inputList.add(num)
     
     var size = inputList.len
-    quickSort(inputList, 0, size)
+    quickSort(inputList, 0, size-1)
 
     for i in 0..<inputList.len - 1:
         doAssert inputList[i] <= inputList[i + 1], "Sequence properly sorted"
