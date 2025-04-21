@@ -1,6 +1,13 @@
+import ../information/types
+
+proc cmp(a, b: (float, Coord)): int =
+  if a[0] < b[0]: return -1
+  elif a[0] > b[0]: return 1
+  else: return 0
+
 type
     MinHeap*[T] = object
-        arr: seq[T]
+        arr*: seq[T]
 
 proc constructMinHeap*[T](): MinHeap[T] =
     result = MinHeap[T](arr: @[])
@@ -50,6 +57,8 @@ proc extractMin*[T](self: var MinHeap[T]): T =
     discard self.arr.pop()
     if self.arr.len > 0:
         self.heapifyDown()
+
+
 
 when isMainModule: #Test case to ensure proper behavior
     import random

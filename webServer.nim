@@ -1,8 +1,4 @@
-# webServer.nim
-
-include karax/prelude   # brings in buildHtml, tdiv, h3, ul, li, setRenderer, etc.
-import dom              # for JS interop via importjs
-import strutils         # for string.split
+include karax/prelude   
 
 var points: seq[(float, float)] = @[]  # store clicked points
 
