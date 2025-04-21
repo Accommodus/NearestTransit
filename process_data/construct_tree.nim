@@ -1,6 +1,8 @@
 import kdtree
 import defs
-import std/[tables]
+import std/[tables, marshal, syncio]
+from ../settings import treeFile
+
 
 proc constructTree*(table: Table[Coord, seq[TransitPoint]]): KdTree[seq[TransitPoint]] =
   ## Constructs a KdTree from a table of coordinates and their associated TransitPoints.
@@ -12,3 +14,14 @@ proc constructTree*(table: Table[Coord, seq[TransitPoint]]): KdTree[seq[TransitP
     holder.add((rad_k, v))
 
   result = newKdTree[seq[TransitPoint]](holder, haversineDist) # O(n log n)
+
+proc saveTree*(tree: KdTree[seq[TransitPoint]], filePath: string) =
+  ## Saves the KdTree to a file using marshal.
+
+  writeFile(filePath, $$tree)
+
+proc getTree*(): KdTree[seq[TransitPoint]] =
+  ## Loads the KdTree from a file using marshal.
+  
+  let data = readFile(treeFile) # have tried to avoid using hardcoded file paths outside of protected sections, but this is much cleaner
+  return to[KdTree[seq[TransitPoint]]](data)

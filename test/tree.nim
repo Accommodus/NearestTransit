@@ -1,7 +1,5 @@
-import ../process_data/[construct_tree, parse_csv, defs]
+import ../process_data/[construct_tree, defs]
 import kdtree
-from ../settings import dataFile
 
-var table = getLocationPoints(dataFile) 
-var tree = constructTree(table)
-echo tree.nearestNeighbours(newCoord(0, 0), 1) # dummy coordinate
+var tree = getTree()
+echo tree.nearestNeighbours(newCoord(0, 0), 10) # dummy coordinate
