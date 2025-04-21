@@ -1,10 +1,3 @@
-import nodeLocations
-
-proc cmp(a, b: LocationNode): int =
-  if a.distance < b.distance: return -1
-  elif a.distance > b.distance: return 1
-  else: return 0
-
 type
     MinHeap*[T] = object
         arr: seq[T]
