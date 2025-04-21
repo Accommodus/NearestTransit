@@ -1,24 +1,39 @@
-import os
-import jester, json, strutils
+# webServer.nim
 
-routes:
-  get "/":
-    resp readFile("public/map.html")
+include karax/prelude   # brings in buildHtml, tdiv, h3, ul, li, setRenderer, etc.
+import dom              # for JS interop via importjs
+import strutils         # for string.split
 
-  post "/api/mapclick":
-    let data = parseJson(request.body)
-    let lat = data["lat"].fnum
-    let lng = data["lng"].fnum
-    echo "Map clicked at: ", lat, ", ", lng
+var points: seq[(float, float)] = @[]  # store clicked points
 
-    # You could store it in a DB or file here
-    resp "Click received at: " & $lat & ", " & $lng
+proc setupMap() {.importjs: """
+  setTimeout(function() {
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(map);
+    map.on('click', function(e) {
+      L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+      __karax_callback__("mapClicked", e.latlng.lat + "," + e.latlng.lng);
+    });
+  }, 100);
+""".}
 
-  get "/static/@filename":
-    let filePath = "public/" & @"filename"
-    if fileExists(filePath):
-      resp readFile(filePath)
-    else:
-      resp Http404, "File not found"
+proc render(): VNode =
+  result = buildHtml(tdiv):
+    tdiv(id = "map")
+    h3: text "Points Clicked:"
+    ul:
+      for lat, lon in points:
+        li: text "(" & $lat & ", " & $lon & ")"
+  setupMap()
 
-runForever()
+proc mapClicked(data: cstring) {.exportc.} =
+  # convert cstring → Nim string, then split on the string ","
+  let parts = ($data).split(",")
+  if parts.len == 2:
+    points.add((parseFloat(parts[0]), parseFloat(parts[1])))
+    setRenderer(render, "karaxContainer")  # re‑render with the new point
+
+proc main() =
+  setRenderer(render, "karaxContainer")
+
+main()
