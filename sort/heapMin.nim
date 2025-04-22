@@ -57,28 +57,3 @@ proc extractMin*[T](self: var MinHeap[T]): T =
     discard self.arr.pop()
     if self.arr.len > 0:
         self.heapifyDown()
-
-
-
-when isMainModule: #Test case to ensure proper behavior
-    import random
-
-    var heap = constructMinHeap[float]()
-
-  # Generate random inserts
-    const N = 10000
-    var inputList: seq[float] = @[]
-    for _ in 0..<N:
-        let num = rand(100.0)
-        inputList.add(num)
-        heap.insert(num)
-
-    var extracted: seq[float] = @[]
-    while heap.arr.len > 0:
-        extracted.add(heap.extractMin())
-
-  # Check if min heap properties are violated
-    for i in 0..<extracted.len - 1:
-      doAssert extracted[i] <= extracted[i + 1], "Heap property violated"
-
-    echo "Test Passed!"

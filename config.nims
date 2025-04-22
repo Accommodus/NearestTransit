@@ -1,11 +1,7 @@
 import std/[strutils]
 
-task data, "ensures the data set has been downloaded by executing download_data.nim":
-  selfExec("r -d:ssl -d:download information/compile_data.nim")
-
-task tree, "constructs the kd-tree from the data set":
-  dataTask()
-  selfExec("r -d:save_tree information/compile_data.nim")
+task tree, "constructs the kd-tree and downloads the data set":
+  selfExec("r -d:save_tree -d:download information/compile_data.nim")
 
 task test, "runs the tests":
   treeTask()
