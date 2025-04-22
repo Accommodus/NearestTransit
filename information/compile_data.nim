@@ -1,6 +1,6 @@
 import std/[dirs, paths, files, httpclient]
 from settings import dataDir, dataFile, dataUrl, treeFile
-import ../process_data/[save_tree, parse_csv, construct_tree]
+import ../process_data/[static_tree, parse_csv, construct_tree]
 
 when defined(download):
   discard existsOrCreateDir(dataDir.Path)

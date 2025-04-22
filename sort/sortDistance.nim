@@ -10,7 +10,6 @@ proc cmp(a, b: (float, Coord)): int =
 
 
 proc sortDistanceHeap*(table: Table[Coord, TranSeq], position: Coord): MinHeap[(float, Coord)] = 
-    result = constructMinHeap[(float, Coord)]()
     for coord in table.keys:
         let dist = haversineDist(coord, position)
         result.inject((dist, coord))
