@@ -10,8 +10,14 @@ This project identifies the *k* closest public transportation stops to a given l
 - Efficient nearest-neighbor lookup using a KDTree data structure.
 - Web-based UI that allows interactive queries and visual feedback via map rendering.
 
+## Environment
+
+- see branch `no-merge/devcontainer` for instructions on using the vscode devcontainer
+
 ## Building
+
 - do `nim data` to download data files
+- do `nim test` to run the test programs
 
 ## *Note on Repository History*
 
