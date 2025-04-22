@@ -1,6 +1,7 @@
-import std/[tables, deque]
+import std/[tables]
 include kdtree
 import kdtree as kd
+import linked_list_queue
 
 type
   StaticKdNode[T] = object
@@ -27,22 +28,21 @@ func toStatic*[T](tree: var kd.KdTree[T]): StaticKdTree[T] =
   ## Each node contains integer indices to its children.
 
   var 
-    queue: initDeque[ref KdNode[T]]
+    queue: llQueue[KdNode[T]]
     nodeMap = initTable[KdNode[T], int]()  # map from node ref to index
     nodes: seq[KdNode[T]]
 
-  let root: ref KdNode[T] = tree.root
-  queue.addLast(root)
+  queue.enqueue(tree.root)
 
   # assign indices to each node
   while queue.len > 0:
-    let cur = queue.popFirst()
+    let cur = queue.dequeue()
 
     if cur == nil: continue
     nodeMap[cur] = nodes.len
     nodes.add(cur)
-    if cur.left != nil: queue.addLast(cur.left)
-    if cur.right != nil: queue.addLast(cur.right)
+    if cur.left != nil: queue.enqueue(cur.left)
+    if cur.right != nil: queue.enqueue(cur.right)
 
   # build static representation
   var result = newSeqOfCap[StaticKdNode[T]](nodes.len)
