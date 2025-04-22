@@ -21,6 +21,8 @@ type
     agency_id*: string
     download_date*: string
 
+  TranSeq* = seq[TransitPoint]
+
   DistData* = object
     distance*: float
     data*: seq[TransitPoint]
