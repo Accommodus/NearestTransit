@@ -24,11 +24,29 @@ type
   TranSeq* = seq[TransitPoint]
 
   DistData* = object
-    distance*: float
+    distance*: float = 0
     data*: seq[TransitPoint]
-    coord*: Coord
+    coord*: Coord = [0, 0]
 
-  sortAlgInPlace* = proc (i: var openArray[DistData]) {.nimcall.}
+  sortAlgInPlace* = proc (i: var seq[DistData]) {.nimcall.}
+
+proc `<`*(a, b: DistData): bool =
+  a.distance < b.distance
+
+proc `<=`*(a, b: DistData): bool =
+  a.distance <= b.distance
+
+proc `>`*(a, b: DistData): bool =
+  a.distance > b.distance
+
+proc `>=`*(a, b: DistData): bool =
+  a.distance >= b.distance
+
+proc `==`*(a, b: DistData): bool =
+  a.distance == b.distance
+
+proc `!=`*(a, b: DistData): bool =
+  a.distance != b.distance
 
 proc lat*(c: Coord): float =
   return c[0]
