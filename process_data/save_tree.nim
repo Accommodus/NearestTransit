@@ -1,6 +1,7 @@
 import std/[tables]
-include kdtree
 import linked_list_queue
+include kdtree
+
 
 type
   StaticKdNode*[T] = object

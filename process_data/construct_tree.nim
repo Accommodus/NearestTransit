@@ -23,4 +23,4 @@ proc loadTree*[T](file: string): KdTree[T] =
   let data = readFile(file)
   
   let s = to[StaticKdTree[T]](data)
-  return toDynamic(s)
+  return toDynamic(s, haversineDist)
