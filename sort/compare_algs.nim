@@ -1,13 +1,14 @@
 import ../information/types
+import ../process_data/static_tree
 import std/[monotimes, times]
 
-func KNNSort(tree: var tranTree, kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
+proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
 
   var inputArray: seq[DistData]
 
   let nearestStops = tree.nearestNeighbours(kPoint, k)
   for i in nearestStops:
-    let dd = distData(
+    let dd = DistData(
       distance: haversineDist(i[0], sortPoint),
       data: i[1],
       coord: i[0]

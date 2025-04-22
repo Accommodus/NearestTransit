@@ -3,18 +3,18 @@ from ../information/settings import dataFile
 import ../information/types
 
 var tree: KdTree[seq[TransitPoint]] = constructTree(getLocationPoints(dataFile))
-let staticTree: StaticKdTree[seq[TransitPoint]] = toStatic[seq[TransitPoint]](tree)
-let newDynTree  = toDynamic[seq[TransitPoint]](staticTree)
+let statTree: StaticKdTree[seq[TransitPoint]] = toStatic[seq[TransitPoint]](tree)
+let newDynTree  = toDynamic[seq[TransitPoint]](statTree)
 
 assert tree.len == newDynTree.len
 
 let staticTree2 = toStatic[seq[TransitPoint]](newDynTree)
 
-assert staticTree.len == staticTree2.len
-echo staticTree.len
+assert statTree.len == staticTree2.len
+echo statTree.len
 
-for i in 0..<staticTree.len:
-  let a = staticTree[i]
+for i in 0..<statTree.len:
+  let a = statTree[i]
   let b = staticTree2[i]
 
   if a.left != b.left:

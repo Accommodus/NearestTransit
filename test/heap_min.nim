@@ -1,4 +1,4 @@
-import ../sort/heapMin
+import ../sort/heap_min
 import random
 
 var heap: MinHeap[float]

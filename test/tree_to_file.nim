@@ -1,4 +1,4 @@
-import ../process_data/[construct_tree, save_tree, parse_csv]
+import ../process_data/[construct_tree, static_tree, parse_csv]
 from ../information/settings import dataFile, treeFile
 import ../information/types
 import std/[paths, files]

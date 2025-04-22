@@ -1,5 +1,5 @@
 import random
-import ../sort/quickSort
+import ../sort/quick_sort
 
 const N = 10000
 var inputList: seq[float] = @[]

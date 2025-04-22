@@ -1,6 +1,6 @@
 import ../information/types
-import quickSort
-import heapMin
+import quick_sort
+import heap_min
 import std/tables
 
 proc cmp(a, b: (float, Coord)): int =

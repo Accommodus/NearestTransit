@@ -52,3 +52,10 @@ proc extractMin*[T](self: var MinHeap[T]): T =
     discard self.pop()
     if self.len > 0:
         self.heapifyDown()
+
+func heapSortEntry*[T](input: var MinHeap[T]) =
+  for item in input:
+    input.inject(item)
+
+  for i in 0..<input.len:
+    input[i] = input.extractMin()

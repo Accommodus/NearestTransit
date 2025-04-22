@@ -1,4 +1,4 @@
-import ../sort/[sortDistance, heapMin]
+import ../sort/[sort_distance, heap_min]
 import ../process_data/parse_csv
 import ../information/types
 from ../information/settings import dataFile

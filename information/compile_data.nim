@@ -20,7 +20,7 @@ when defined(save_tree):
 
   if not fileExists(treeFile.Path):
     var tree = constructTree(getLocationPoints(dataFile))
-    saveTree(tree, treeFile)
+    storeTree(tree, treeFile)
 
   else:
     echo "Tree file already exists. Skipping tree construction."
