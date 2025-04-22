@@ -116,7 +116,7 @@ func toDynamic*[T](staticTree: StaticKdTree[T]; distFunc: DistFunc = sqrDist): k
     if s.left >= 0:
       nodes[i].left = nodes[s.left]
     if s.right >= 0:
-      nodes[i].right = nodes[s.right]
+      nodes[i].right = nodes[s.rright]
 
   tree.root = nodes[0]
   return tree
