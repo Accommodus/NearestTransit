@@ -1,5 +1,4 @@
 import ../information/types
-import std/sequtils
 
 proc cmp(a, b: (float, Coord)): int =
   if a[0] < b[0]: return -1
@@ -21,27 +20,28 @@ proc heapifyUp[T](self: var MinHeap[T]) =
       self[parent(i)] = dummy
       i = parent(i)
 
-proc heapifyDown[T](self: var MinHeap[T]) =
-  var i = 0
+proc heapifyDown[T](self: var MinHeap[T], idx: int = 0, size: int = -1) =
+  let n = if size < 0: self.len else: size
+  var i = idx
 
   while true:
-
     var smallest = i
     let left = leftChild(i)
     let right = rightChild(i)
- 
-    if left < self.len and cmp(self[left], self[smallest]) < 0: #find smallest
+
+    if left < n and cmp(self[left], self[smallest]) < 0:
       smallest = left
-    if right < self.len and cmp(self[right], self[smallest]) < 0:
+    if right < n and cmp(self[right], self[smallest]) < 0:
       smallest = right
 
     if smallest == i:
       break
 
-    let dummy = self[i] #swap with smallest
+    let dummy = self[i]
     self[i] = self[smallest]
     self[smallest] = dummy
     i = smallest
+
 
 proc inject*[T](self: var MinHeap[T], key: T)=
     self.add(key)
@@ -54,11 +54,14 @@ proc extractMin*[T](self: var MinHeap[T]): T =
     if self.len > 0:
         self.heapifyDown()
 
-func heapSortEntry*[T](inp: var openArray[T]) =
-  var input = toSeq(inp)
+proc heapSort*[T](self: var MinHeap[T]) =
+  let n = self.len
 
-  for item in input:
-    input.inject(item)
+  for i in countdown(n div 2 - 1, 0):
+    self.heapifyDown(i, n)
 
-  for i in 0..<input.len:
-    input[i] = input.extractMin()
+  for e in countdown(n - 1, 1):
+    let dummy = self[0]
+    self[0] = self[e]
+    self[e] = dummy
+    self.heapifyDown(0, e)
