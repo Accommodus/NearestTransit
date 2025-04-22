@@ -2,6 +2,9 @@ import ../information/types
 import ../process_data/static_tree
 import std/[monotimes, times]
 
+#proc quickSortDistData*(inputArray: var seq[DistData]) =
+  
+
 proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
 
   var inputArray: seq[DistData]

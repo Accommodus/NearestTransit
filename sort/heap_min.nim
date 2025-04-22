@@ -1,4 +1,5 @@
 import ../information/types
+import std/sequtils
 
 proc cmp(a, b: (float, Coord)): int =
   if a[0] < b[0]: return -1
@@ -53,7 +54,9 @@ proc extractMin*[T](self: var MinHeap[T]): T =
     if self.len > 0:
         self.heapifyDown()
 
-func heapSortEntry*[T](input: var MinHeap[T]) =
+func heapSortEntry*[T](inp: var openArray[T]) =
+  var input = toSeq(inp)
+
   for item in input:
     input.inject(item)
 

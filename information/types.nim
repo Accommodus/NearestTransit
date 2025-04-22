@@ -63,7 +63,7 @@ proc haversineDist*(a, b: Coord): float =
 
   return earthRadius * c
 
-func isSorted*[T](s: openArray): bool =
+func isSorted*[T](s: openArray[T]): bool =
   for i in 1..<s.len:
     if s[i - 1] > s[i]:
       return false
