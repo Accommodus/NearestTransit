@@ -1,5 +1,4 @@
 import std/math
-import kdtree
 from settings import earthRadius
 
 type
@@ -22,15 +21,12 @@ type
     agency_id*: string
     download_date*: string
 
-  tranSeq* = seq[TransitPoint]
-  tranTree* = KdTree[seq[TransitPoint]]
-
-  distData* = object
+  DistData* = object
     distance*: float
-    data*: tranSeq
+    data*: seq[TransitPoint]
     coord*: Coord
 
-  sortAlgInPlace* = proc (i: var openArray[distData]) {.nimcall.}
+  sortAlgInPlace* = proc (i: var openArray[DistData]) {.nimcall.}
 
 proc lat*(c: Coord): float =
   return c[0]

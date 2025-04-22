@@ -1,8 +1,16 @@
 import std/[dirs, paths, files, httpclient]
 from settings import dataDir, dataFile, dataUrl, treeFile
-import process_data/[construct_tree, parse_csv]
+import ../process_data/[save_tree]
 
-proc downloadData() =
+#[
+proc saveTree() =
+    discard existsOrCreateDir(dataDir.Path)
+      
+    if not fileExists(treeFile.Path):
+      saveTree(constructTree(getLocationPoints(dataFile)), treeFile)
+]#
+
+when defined(download):
   discard existsOrCreateDir(dataDir.Path)
 
   if not fileExists(dataFile.Path):
@@ -12,16 +20,6 @@ proc downloadData() =
     finally:
       client.close()
 
-proc saveTree() =
-  discard existsOrCreateDir(dataDir.Path)
-    
-  if not fileExists(treeFile.Path):
-    saveTree(constructTree(getLocationPoints(dataFile)), treeFile)
-
-when isMainModule:
-  when defined(download):
-    downloadData()
-
-  when defined(save_tree):
-    saveTree()
+  #discard when defined(save_tree):
+  # saveTree()
     

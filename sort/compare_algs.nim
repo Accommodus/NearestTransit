@@ -1,5 +1,4 @@
 import ../information/types
-import kdtree
 import std/[monotimes, times]
 
 proc KNNSort(tree: var tranTree, kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
