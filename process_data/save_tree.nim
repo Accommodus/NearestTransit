@@ -1,21 +1,20 @@
 import std/[tables]
 include kdtree
-import kdtree as kd
 import linked_list_queue
 
 type
-  StaticKdNode[T] = object
-    left, right: int
-    point: KdPoint
-    data: T
-    splitDimension: int
+  StaticKdNode*[T] = object
+    left*, right*: int
+    point*: KdPoint
+    data*: T
+    splitDimension*: int
 
   StaticKdTree*[T] = seq[StaticKdNode[T]]
 
 func toStatic[T](node: KdNode[T], left, right: int): StaticKdNode[T] =
   ## Converts a kd-node to a static representation.
   
-  result(
+  result = StaticKdNode[T](
     left: left,
     right: right,
     point: node.point,
@@ -23,46 +22,37 @@ func toStatic[T](node: KdNode[T], left, right: int): StaticKdNode[T] =
     splitDimension: node.splitDimension
   )
 
-func toStatic*[T](tree: var kd.KdTree[T]): StaticKdTree[T] =
-  ## Converts a KdTree into a flat static representation.
-  ## Each node contains integer indices to its children.
-
-  var 
-    queue: llQueue[KdNode[T]]
-    nodeMap = initTable[KdNode[T], int]()  # map from node ref to index
+func toStatic*[T](tree: KdTree[T]): StaticKdTree[T] =
+  var
+    queue = llQueue[KdNode[T]]()
+    nodeMap = initTable[pointer, int]()   # ← key is raw pointer
     nodes: seq[KdNode[T]]
 
   queue.enqueue(tree.root)
-
-  # assign indices to each node
   while queue.len > 0:
     let cur = queue.dequeue()
-
     if cur == nil: continue
-    nodeMap[cur] = nodes.len
+
+    let p = cast[pointer](cur)
+    nodeMap[p] = nodes.len
     nodes.add(cur)
-    if cur.left != nil: queue.enqueue(cur.left)
+
+    if cur.left  != nil: queue.enqueue(cur.left)
     if cur.right != nil: queue.enqueue(cur.right)
 
-  # build static representation
-  var result = newSeqOfCap[StaticKdNode[T]](nodes.len)
+  result = newSeqOfCap[StaticKdNode[T]](nodes.len)
   for i, node in nodes:
-    var left = -1
-    var right = -1
+    var l = -1; var r = -1
+    let lp = cast[pointer](node.left)
+    let rp = cast[pointer](node.right)
+    if node.left  != nil and nodeMap.hasKey(lp): l = nodeMap[lp]
+    if node.right != nil and nodeMap.hasKey(rp): r = nodeMap[rp]
+    result.add(node.toStatic(l, r))
 
-    if node.left != nil and nodeMap.hasKey(node.left):
-      left = nodeMap[node.left]
-    if node.right != nil and nodeMap.hasKey(node.right):
-      right = nodeMap[node.right]
-
-    result.add node.toStatic(left, right)
-
-  return result
-
-func toDynamic*[T](staticTree: StaticKdTree[T]; distFunc: DistFunc = sqrDist): kd.KdTree[T] =
+func toDynamic*[T](staticTree: StaticKdTree[T]; distFunc: DistFunc = sqrDist): KdTree[T] =
   ## Converts a static KdTree representation back into a dynamic KdTree.
   
-  var tree: kd.KdTree[T]
+  var tree: KdTree[T]
   tree.len = staticTree.len
   tree.distFunc = distFunc
 
@@ -81,7 +71,7 @@ func toDynamic*[T](staticTree: StaticKdTree[T]; distFunc: DistFunc = sqrDist): k
     if s.left >= 0:
       nodes[i].left = nodes[s.left]
     if s.right >= 0:
-      nodes[i].right = nodes[s.rright]
+      nodes[i].right = nodes[s.right]
 
   tree.root = nodes[0]
   return tree

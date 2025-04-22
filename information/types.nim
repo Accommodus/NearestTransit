@@ -1,5 +1,4 @@
 import std/math
-import kdtree
 from settings import earthRadius
 
 type

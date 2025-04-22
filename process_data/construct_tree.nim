@@ -1,10 +1,8 @@
-import kdtree as kd
 import ../information/types
 import std/[tables, marshal, syncio]
-from ../information/settings import treeFile
+import save_tree
 
-
-proc constructTree*[T](table: Table[Coord, T]): kd.KdTree[T] =
+proc constructTree*[T](table: Table[Coord, T]): KdTree[T] =
   ## Constructs a KdTree from a table of coordinates and their associated TransitPoints.
   ## Time complexity: O(n log n) where n is the number of items in the dataset.
 
@@ -13,4 +11,16 @@ proc constructTree*[T](table: Table[Coord, T]): kd.KdTree[T] =
     let rad_k = k.asRad()
     holder.add((rad_k, v))
 
-  result = kd.newKdTree[T](holder, haversineDist) # O(n log n)
+  result = newKdTree[T](holder, haversineDist) # O(n log n)
+
+proc storeTree*[T](tree: KdTree[T], file: string) =
+  let s = toStatic(tree)
+
+  let data = $$s
+  file.writeFile(data)
+
+proc loadTree*[T](file: string): KdTree[T] =
+  let data = readFile(file)
+  
+  let s = to[StaticKdTree[T]](data)
+  return toDynamic(s)

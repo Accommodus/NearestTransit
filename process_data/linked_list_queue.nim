@@ -13,7 +13,7 @@ func enqueue*[T](q: var llQueue[T], data: T) =
   ## Adds an element to the end of the queue.
   ## Time complexity: O(1)
 
-  var newNode: qRefNode[T] = qRefNode[T](qNode[T](data: data))
+  var newNode= qRefNode[T](data: data)
 
   if q.tail == nil:
     q.head = newNode
@@ -39,7 +39,7 @@ func dequeue*[T](q: var llQueue[T]): T =
 
   q.size.dec()
 
-func size*[T](q: llQueue[T]): Natural =    
+func len*[T](q: llQueue[T]): Natural =    
   ## Returns queue size.
   ## Time complexity: O(1)
 
