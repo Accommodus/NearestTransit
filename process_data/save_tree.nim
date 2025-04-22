@@ -1,42 +1,6 @@
-import std/[tables]
+import std/[tables, deque]
 include kdtree
 import kdtree as kd
-
-type
-  CircularQueue[T] = object
-    data: seq[T]
-    head, tail, count: int = 0
-
-proc reserve[T](q: var CircularQueue[T], extraCap: Natural) =
-  let oldLen = q.data.len
-  let newLen = if oldLen > 0: oldLen + extraCap else: max(1, extraCap)
-  var newData = newSeq[T](newLen)
-
-  # copy all live elements starting at head, in order
-  for i in 0..<q.count:
-    newData[i] = q.data[(q.head + i) mod oldLen]
-
-  q.data = newData
-  q.head = 0
-  q.tail = q.count mod newLen
-
-func enqueue[T](q: var CircularQueue[T], item: T) =
-  if q.count == q.data.high:
-    q.reserve(q.data.len)
-
-  q.data[q.tail] = item
-  q.tail = (q.tail + 1) mod q.data.len
-  inc q.count
-
-func dequeue[T](q: var CircularQueue[T]): T =
-  if q.count == 0:
-    raise newException(IndexError, "Queue is empty")
-
-  let item = q.data[q.head]
-  q.head = (q.head + 1) mod q.data.len
-  dec q.count
-  return item
-
 
 type
   StaticKdNode[T] = object
@@ -63,16 +27,17 @@ func toStatic*[T](tree: var kd.KdTree[T]): StaticKdTree[T] =
   ## Each node contains integer indices to its children.
 
   var 
-    queue: basicRefQueue[KdNode[T]]
+    queue: initDeque[ref KdNode[T]]
     nodeMap = initTable[KdNode[T], int]()  # map from node ref to index
     nodes: seq[KdNode[T]]
 
-  var root = tree.root
+  let root: ref KdNode[T] = tree.root
   queue.addLast(root)
 
   # assign indices to each node
   while queue.len > 0:
     let cur = queue.popFirst()
+
     if cur == nil: continue
     nodeMap[cur] = nodes.len
     nodes.add(cur)
