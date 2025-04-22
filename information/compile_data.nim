@@ -1,14 +1,6 @@
 import std/[dirs, paths, files, httpclient]
 from settings import dataDir, dataFile, dataUrl, treeFile
-import ../process_data/[save_tree]
-
-#[
-proc saveTree() =
-    discard existsOrCreateDir(dataDir.Path)
-      
-    if not fileExists(treeFile.Path):
-      saveTree(constructTree(getLocationPoints(dataFile)), treeFile)
-]#
+import ../process_data/[save_tree, parse_csv, construct_tree]
 
 when defined(download):
   discard existsOrCreateDir(dataDir.Path)
@@ -20,6 +12,16 @@ when defined(download):
     finally:
       client.close()
 
-  #discard when defined(save_tree):
-  # saveTree()
+  else:
+    echo "Data file already exists. Skipping Download."
+
+when defined(save_tree):
+  discard existsOrCreateDir(dataDir.Path)
+
+  if not fileExists(treeFile.Path):
+    var tree = constructTree(getLocationPoints(dataFile))
+    saveTree(tree, treeFile)
+
+  else:
+    echo "Tree file already exists. Skipping tree construction."
     

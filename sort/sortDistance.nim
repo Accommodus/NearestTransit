@@ -13,7 +13,7 @@ proc sortDistanceHeap*(table: Table[Coord, TranSeq], position: Coord): MinHeap[(
     result = constructMinHeap[(float, Coord)]()
     for coord in table.keys:
         let dist = haversineDist(coord, position)
-        result.insert((dist, coord))
+        result.inject((dist, coord))
 
 proc sortDistanceQuick*(table: Table[Coord, TranSeq], position: Coord): seq[(float, Coord)] =
     result = @[]

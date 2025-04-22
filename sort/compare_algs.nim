@@ -1,9 +1,9 @@
 import ../information/types
 import std/[monotimes, times]
 
-proc KNNSort(tree: var tranTree, kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
+func KNNSort(tree: var tranTree, kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
 
-  var inputArray: seq[distData]
+  var inputArray: seq[DistData]
 
   let nearestStops = tree.nearestNeighbours(kPoint, k)
   for i in nearestStops:

@@ -1,6 +1,6 @@
 import ../information/types
 import std/[tables, marshal, syncio]
-import save_tree
+import static_tree
 
 proc constructTree*[T](table: Table[Coord, T]): KdTree[T] =
   ## Constructs a KdTree from a table of coordinates and their associated TransitPoints.

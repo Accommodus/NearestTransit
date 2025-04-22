@@ -24,3 +24,7 @@ proc quickSort*[T](arr: var seq[T], low: int, high: int): void =
         var index = partition(low, high, arr)
         quickSort(arr, low, index - 1)
         quickSort(arr, index + 1, high)
+
+func quickSortEntry()*[T](arr: var seq[T])=
+    quickSort(arr, 0, arr.low, arr.high)
+    
