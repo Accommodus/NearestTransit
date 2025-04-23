@@ -1,9 +1,9 @@
 import ../sort/[sort_distance, heap_min]
 import ../process_data/parse_csv
 import ../information/types
-from ../information/settings import dataFile
+from ../information/settings import dataFile, dataFileRelative
 
-let filename = dataFile
+let filename = dataFileRelative
 let table = getLocationPoints(filename)
 
 let position: Coord = [37.7749, -122.4194]  # Example: Coordinates for San Francisco
@@ -26,7 +26,7 @@ if knnH == knnQ:
 
 echo "\nVerifying sorted order for Heap using extractMin:"
 var heapSortedExtracted: seq[(float, Coord)] = @[]
-while heapSortedCheck.arr.len > 0:
+while heapSortedCheck.len > 0:
   heapSortedExtracted.add(heapSortedCheck.extractMin())
 
 var isHeapSortedCorrect = true

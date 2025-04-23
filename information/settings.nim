@@ -9,3 +9,6 @@ const
 let 
   dataFile* = dataDir & "/" & dataFileName
   treeFile* = dataDir & "/" & treeFileName
+
+  dataFileRelative* = "../" & dataFile
+  treeFileRelative* = "../" & treeFile

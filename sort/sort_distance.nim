@@ -22,7 +22,7 @@ proc sortDistanceQuick*(table: Table[Coord, TranSeq], position: Coord): seq[(flo
 
 proc knnHeap*[T](heap: var MinHeap[T], k: int): seq[T] =
     result = @[]
-    for i in 0..<min(k, heap.arr.len):
+    for i in 0..<min(k, heap.len):
         result.add(heap.extractMin())
 
 proc knnQuick*[T](arr: seq[T], k: int): seq[T] =
