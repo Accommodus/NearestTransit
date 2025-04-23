@@ -6,6 +6,10 @@ import std/[monotimes, times]
   
 
 proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): (seq[Duration], seq[DistData]) =
+  ## Finds k nearest neighbors to kPoint, measures how long each sorting algorithm in algs takes to sort them by distance to sortPoint.
+  ## Returns: (durations of each sort, original unsorted results).
+  ## Time complexity: O(log n + m * k log k) for n tree nodes, k neighbors, m algorithms.
+
 
   var inputArray: seq[DistData]
 
