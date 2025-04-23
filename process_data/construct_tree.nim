@@ -24,3 +24,7 @@ proc loadTree*[T](file: string): KdTree[T] =
   
   let s = to[StaticKdTree[T]](data)
   return toDynamic(s, haversineDist)
+
+proc loadTreeJsonStr*[T](data: string): KdTree[T] =
+  let s = to[StaticKdTree[T]](data)
+  return toDynamic(s, haversineDist)

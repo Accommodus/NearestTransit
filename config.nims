@@ -13,3 +13,7 @@ task test, "runs the tests":
       let command = "r -d:debugging " & testFile
       selfExec(command)
       
+task cli, "builds the command line interface":
+  dataTask()
+
+  selfExec("r -d:tree_file=data/tree.json cli/build_cli.nim")
