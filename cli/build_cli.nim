@@ -17,5 +17,5 @@ let
     sortPoint = newCoord(lat, lon)
     durations = KNNSort(tree, coord, k, sortPoint, [quickSortEntry[DistData], heapSort[DistData]])
 
-echo "QuickSort took: ", durations[0]
-echo "HeapSort took: ", durations[1]
+echo "QuickSort took: ", durations[0][0]
+echo "HeapSort took: ", durations[0][1]
