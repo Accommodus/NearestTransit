@@ -5,7 +5,7 @@ import std/[monotimes, times]
 #proc quickSortDistData*(inputArray: var seq[DistData]) =
   
 
-proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): seq[Duration] =
+proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: Coord, algs: openArray[sortAlgInPlace]): (seq[Duration], seq[DistData]) =
 
   var inputArray: seq[DistData]
 
@@ -18,11 +18,18 @@ proc KNNSort*(tree: var KdTree[TranSeq], kPoint: Coord, k: Natural, sortPoint: C
     )
     inputArray.add(dd)
 
-  for alg in algs:
-    var iCopy = @inputArray
+  for a in 0..algs.high:
+    if a == 0:
+      result[1] = inputArray
+
+    let alg = algs[a]
+
+    var iCopy: seq[DistData] # deep copy so the array is not pre-sorted by ealier algs
+    for i in inputArray:
+      iCopy.add(i)
 
     let start = getMonoTime()
     alg(iCopy)
     let finish = getMonoTime()
 
-    result.add(finish - start)
+    result[0].add(finish - start)

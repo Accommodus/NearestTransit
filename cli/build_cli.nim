@@ -1,15 +1,17 @@
+include ../information/settings
+const treeData = staticRead(treeFileRelative)
+
 import strutils, os
 import ../sort/[compare_algs, quick_sort, heap_min]
-import ../information/[settings, types]
-from ../information/settings import treeFileRelative
 import ../process_data/construct_tree
+import ../information/types
 
 let
     lat = parseFloat(paramStr(1))
     lon = parseFloat(paramStr(2))
-    k =parseInt(paramStr(3))
+    k = parseInt(paramStr(3))
 var
-    tree = loadTree[TranSeq](treeFileRelative)
+    tree = loadTreeJsonStr[TranSeq](treeData)
 let
     coord = newCoord(0,0)
     sortPoint = newCoord(lat, lon)

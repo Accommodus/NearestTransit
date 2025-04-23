@@ -39,9 +39,13 @@ assertSortAlg(quickSeq, m1)
 assertSortAlg(heapSort, l2)
 assertSortAlg(heapSort, m2)
 
+var tree = loadTree[TranSeq](treeFile)
 let
-  tree = loadTree[TranSeq](treeFile)
   cord = newCoord(0, 0)
   k = 5
   sortPoint = newCoord(0.15, 0.15)
-  
+  r = KNNSort(tree, cord, k, sortPoint, [quickSortEntry[DistData], heapSort[DistData]])
+
+echo "final seq: ", r[1]
+echo "quick sort took: ", r[0][0]
+echo "heap sort took: ", r[0][1]
