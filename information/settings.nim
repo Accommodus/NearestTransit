@@ -3,5 +3,10 @@ const
 
   dataDir* = "data"
   dataUrl* = "https://github.com/Accommodus/NearestTransit/releases/download/data/NTAD_National_Transit_Map_Stops_6633473857343365838.csv"
-  dataFile* = "data/NTAD_Stops.csv"
-  treeFile* = "data/tree.json"
+
+let 
+  dataFile* = dataDir & "/" & dataFileName
+  treeFile* = dataDir & "/" & treeFileName
+
+  dataFileRelative* = "../" & dataFile
+  treeFileRelative* = "../" & treeFile
