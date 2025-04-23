@@ -16,4 +16,4 @@ task test, "runs the tests":
 task cli, "builds the command line interface":
   dataTask()
 
-  selfExec("r -d:tree_file=data/tree.json cli/build_cli.nim")
+  selfExec("c -d:release --opt:speed --parallelBuild:0 cli/build_cli.nim")
