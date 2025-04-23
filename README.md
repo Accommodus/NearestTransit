@@ -18,6 +18,7 @@ This project identifies the *k* closest public transportation stops to a given l
 
 - do `nim data` to download data files
 - do `nim test` to run the test programs
+- do `nim cli` to build the command line interface. Outputs to cli dir.
 
 ## *Note on Repository History*
 
